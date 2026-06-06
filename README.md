@@ -140,9 +140,10 @@ http://localhost:5173
 
 ## About the Developer
 
-Dheera Dyapa
+**Dheera Dyapa**
 
 Bachelor of Technology in Computer Science(AIML)
+
 Malla Reddy University, HYD
 
 Interested in Artificial Intelligence, Machine Learning, and Full-Stack Development.
