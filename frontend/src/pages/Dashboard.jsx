@@ -1,4 +1,5 @@
 import { useState } from "react";
+import API from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { Volume2, Mic, Copy, Star } from "lucide-react";
@@ -18,22 +19,25 @@ function Dashboard() {
     navigate("/login");
   };
 
-  const handleTranslate = () => {
-    if (!inputText.trim()) {
-      alert("Please enter text first");
-      return;
-    }
+  const handleTranslate = async () => {
+  if (!inputText.trim()) {
+    alert("Please enter text first");
+    return;
+  }
 
-    const demoTranslations = {
-      hi: "नमस्ते, आप कैसे हैं?",
-      te: "హలో, మీరు ఎలా ఉన్నారు?",
-      ta: "வணக்கம், நீங்கள் எப்படி இருக்கிறீர்கள்?",
-      kn: "ಹಲೋ, ನೀವು ಹೇಗಿದ್ದೀರಿ?",
-      en: inputText,
-    };
+  try {
+    const response = await API.post("/translate", {
+      text: inputText,
+      source: fromLang,
+      target: toLang,
+    });
 
-    setTranslatedText(demoTranslations[toLang] || inputText);
-  };
+    setTranslatedText(response.data.translated);
+  } catch (error) {
+    console.log(error);
+    alert("Translation failed");
+  }
+};
 
   const handleSpeak = () => {
     if (!translatedText) {
